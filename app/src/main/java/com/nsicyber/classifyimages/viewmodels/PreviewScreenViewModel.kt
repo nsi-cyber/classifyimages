@@ -11,7 +11,7 @@ import javax.inject.Inject
 @HiltViewModel
 class PreviewScreenViewModel @Inject constructor() : ViewModel() {
     val imageList =
-        mutableStateOf<List<String?>?>(null)
+        mutableStateOf<List<String>?>(null)
 
 
 

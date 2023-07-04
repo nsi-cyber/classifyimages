@@ -18,6 +18,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.nsicyber.classifyimages.models.FolderModel
+import com.nsicyber.classifyimages.models.ImagesModel
+import com.nsicyber.classifyimages.screens.ClassifyScreen
 import com.nsicyber.classifyimages.screens.PreviewScreen
 import com.nsicyber.classifyimages.screens.StartScreen
 import com.nsicyber.classifyimages.ui.theme.ClassifyImagesTheme
@@ -60,6 +62,27 @@ class MainActivity : ComponentActivity() {
                         PreviewScreen(context,
                             navController = navController,
                             model?.fromJson(FolderModel::class.java)
+                        )
+                    }
+
+                    composable(
+                        "classify_screen?model={model}",
+                        arguments = listOf(
+                            navArgument("model") {
+                                type = NavType.StringType
+                            }
+                        )
+                    ) {
+
+
+                        val model = remember {
+                            it.arguments?.getString("model")
+                        }
+                        var context = LocalContext.current
+
+                        ClassifyScreen(context,
+                            navController = navController,
+                            model?.fromJson(ImagesModel::class.java)!!
                         )
                     }
 

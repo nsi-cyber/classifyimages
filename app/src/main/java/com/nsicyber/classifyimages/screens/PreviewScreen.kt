@@ -36,6 +36,8 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.nsicyber.classifyimages.models.FolderModel
+import com.nsicyber.classifyimages.models.ImagesModel
+import com.nsicyber.classifyimages.toJson
 import com.nsicyber.classifyimages.viewmodels.PreviewScreenViewModel
 
 
@@ -84,6 +86,8 @@ fun PreviewScreen(
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF892EFF)),
 
                 onClick = {
+
+                    navController.navigate("classify_screen?model=${ImagesModel(viewModel.imageList.value).toJson()}")
 
 
                 }) {
