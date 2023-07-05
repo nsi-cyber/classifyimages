@@ -2,6 +2,7 @@ package com.nsicyber.classifyimages.screens
 
 import android.content.Context
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -126,10 +127,12 @@ fun ImageCard(
 
     Box(
         contentAlignment = Alignment.Center,
-        modifier = Modifier.padding(2.dp)
+        modifier = Modifier
+            .padding(2.dp)
             .shadow(5.dp, RoundedCornerShape(10.dp))
             .clip(RoundedCornerShape(10.dp))
-            .aspectRatio(1f).background(Color.White)
+            .aspectRatio(1f)
+            .background(Color.White)
 
 
     ) {
@@ -146,6 +149,34 @@ fun ImageCard(
             modifier = Modifier
                 .fillMaxSize()
         )
+
+
+    }
+
+}
+
+
+
+
+@Composable
+
+fun FolderCard(
+    model: String?
+,completion:(model:String)->Unit) {
+
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier
+            .padding(2.dp)
+            .shadow(5.dp, RoundedCornerShape(10.dp))
+            .clip(RoundedCornerShape(10.dp))
+            .aspectRatio(1f)
+            .background(Color.White).clickable { completion(model.toString()) }
+
+
+    ) {
+
+Text(text = model.toString())
 
 
     }

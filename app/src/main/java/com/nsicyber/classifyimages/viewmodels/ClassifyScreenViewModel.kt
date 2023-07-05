@@ -16,25 +16,41 @@ import javax.inject.Inject
 @HiltViewModel
 class ClassifyScreenViewModel @Inject constructor(private var imageClassifyRepository: ImageClassifyRepository) :
     ViewModel() {
-    val imageList =
+    var imageList =
         mutableStateOf<ArrayList<ClassiedImageModel?>?>(null)
 
+    var classifyTitles = mutableStateOf<HashMap<String, ArrayList<String>>>(hashMapOf())
 
- suspend fun classifyImages(context: Context, list:List<String>) {
-     list?.forEach{
-         uri->
-         getLabel(context, uri)
-     }
+    suspend fun classifyImages(context: Context, list: List<String>) {
+        list?.forEach { uri ->
+            getLabel(context, uri)
+        }
 
- }
+    }
+
+    fun labelToMap(list: List<String>,uri:String) {
+
+        for (i in list) {
+            val temp = classifyTitles.value[i]
+            if (temp == null) {
+                classifyTitles.value[i] = arrayListOf(uri)
+            } else {
+                classifyTitles.value[i]?.add(uri)
+            }
+        }
+    }
 
     suspend fun getLabel(context: Context, uri: String) {
 
-        imageClassifyRepository.labeler.process(InputImage.fromFilePath(context, Uri.fromFile(File(uri))
-        ))
+        imageClassifyRepository.labeler.process(
+            InputImage.fromFilePath(
+                context, Uri.fromFile(File(uri))
+            )
+        )
             .addOnSuccessListener { labels ->
 
-                imageList.value?.add(ClassiedImageModel(labels.map { it.text },uri))
+                imageList.value?.add(ClassiedImageModel(labels.map { it.text }, uri))
+                labelToMap(labels.map { it.text },uri)
             }
             .addOnFailureListener { e ->
                 // Task failed with an exception
