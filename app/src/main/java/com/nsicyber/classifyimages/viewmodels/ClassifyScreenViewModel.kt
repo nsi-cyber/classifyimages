@@ -5,11 +5,10 @@ import android.net.Uri
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.google.mlkit.vision.common.InputImage
-import com.nsicyber.classifyimages.models.ClassiedImageModel
+import com.nsicyber.classifyimages.models.ClassifiedImageModel
 import com.nsicyber.classifyimages.repositories.ImageClassifyRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.io.File
-import java.io.IOException
 import javax.inject.Inject
 
 
@@ -17,7 +16,7 @@ import javax.inject.Inject
 class ClassifyScreenViewModel @Inject constructor(private var imageClassifyRepository: ImageClassifyRepository) :
     ViewModel() {
     var imageList =
-        mutableStateOf<ArrayList<ClassiedImageModel?>?>(null)
+        mutableStateOf<ArrayList<ClassifiedImageModel?>?>(null)
 
     var classifyTitles = mutableStateOf<HashMap<String, ArrayList<String>>>(hashMapOf())
 
@@ -49,7 +48,7 @@ class ClassifyScreenViewModel @Inject constructor(private var imageClassifyRepos
             )
                 .addOnSuccessListener { labels ->
 
-                    imageList.value?.add(ClassiedImageModel(labels.map { it.text }, uri))
+                    imageList.value?.add(ClassifiedImageModel(labels.map { it.text }, uri))
                     labelToMap(labels.map { it.text }, uri)
                 }
                 .addOnFailureListener { e ->
