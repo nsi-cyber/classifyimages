@@ -28,7 +28,7 @@ class ClassifyScreenViewModel @Inject constructor(private var imageClassifyRepos
 
     }
 
-    fun labelToMap(list: List<String>,uri:String) {
+    fun labelToMap(list: List<String>, uri: String) {
 
         for (i in list) {
             val temp = classifyTitles.value[i]
@@ -41,21 +41,23 @@ class ClassifyScreenViewModel @Inject constructor(private var imageClassifyRepos
     }
 
     suspend fun getLabel(context: Context, uri: String) {
-
-        imageClassifyRepository.labeler.process(
-            InputImage.fromFilePath(
-                context, Uri.fromFile(File(uri))
+        if (classifyTitles.value == hashMapOf<String, ArrayList<String>>()) {
+            imageClassifyRepository.labeler.process(
+                InputImage.fromFilePath(
+                    context, Uri.fromFile(File(uri))
+                )
             )
-        )
-            .addOnSuccessListener { labels ->
+                .addOnSuccessListener { labels ->
 
-                imageList.value?.add(ClassiedImageModel(labels.map { it.text }, uri))
-                labelToMap(labels.map { it.text },uri)
-            }
-            .addOnFailureListener { e ->
-                // Task failed with an exception
-                // ...
-            }
+                    imageList.value?.add(ClassiedImageModel(labels.map { it.text }, uri))
+                    labelToMap(labels.map { it.text }, uri)
+                }
+                .addOnFailureListener { e ->
+                    // Task failed with an exception
+                    // ...
+                }
+
+        }
 
     }
 

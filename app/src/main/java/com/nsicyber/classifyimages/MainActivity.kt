@@ -61,7 +61,8 @@ class MainActivity : ComponentActivity() {
                         }
                         var context = LocalContext.current
 
-                        PreviewScreen(context,
+                        PreviewScreen(
+                            context,
                             navController = navController,
                             model?.fromJson(FolderModel::class.java)
                         )
@@ -82,7 +83,8 @@ class MainActivity : ComponentActivity() {
                         }
                         var context = LocalContext.current
 
-                        ClassifyScreen(context,
+                        ClassifyScreen(
+                            context,
                             navController = navController,
                             model?.fromJson(ImagesModel::class.java)!!
                         )
@@ -103,8 +105,14 @@ class MainActivity : ComponentActivity() {
                             it.arguments?.getString("model")
                         }
                         var context = LocalContext.current
+                        try {
+                            var a=model?.fromJson(ClassifiedFolderModel::class.java)!!
 
-                        PreviewClassifiedScreen(context,
+                        } catch (e: Exception) {
+                            println(e.toString())
+                        }
+                        PreviewClassifiedScreen(
+                            context,
                             navController = navController,
                             model?.fromJson(ClassifiedFolderModel::class.java)!!
                         )

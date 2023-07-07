@@ -51,14 +51,6 @@ fun PreviewClassifiedScreen(
     context: Context,
     navController: NavController, model: ClassifiedFolderModel?
 ) {
-
-
-
-
-
-
-    var scope = rememberCoroutineScope()
-
     var viewModel = hiltViewModel<PreviewClassifiedScreenViewModel>()
 
 

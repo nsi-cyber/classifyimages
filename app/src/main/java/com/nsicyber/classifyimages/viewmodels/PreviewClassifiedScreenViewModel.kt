@@ -17,7 +17,6 @@ class PreviewClassifiedScreenViewModel @Inject constructor() : ViewModel() {
         mutableStateOf<Boolean?>(false)
 
 
-
     fun openFolderPicker(): Intent {
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
         intent.addCategory(Intent.CATEGORY_DEFAULT)
@@ -30,9 +29,8 @@ class PreviewClassifiedScreenViewModel @Inject constructor() : ViewModel() {
         if (!Files.exists(destinationPath)) {
             try {
                 Files.createDirectories(destinationPath)
-                println("'$title' klasörü oluşturuldu.")
+
             } catch (e: Exception) {
-                println("Klasör oluşturulurken bir hata oluştu: ${e.message}")
                 return
             }
         }
@@ -44,17 +42,15 @@ class PreviewClassifiedScreenViewModel @Inject constructor() : ViewModel() {
                     val destinationFile = File(destinationPath.toFile(), sourceFile.name)
                     try {
                         sourceFile.copyTo(destinationFile, true)
-                        println("'$sourceFile' dosyası '$title' klasörüne kopyalandı.")
                     } catch (e: Exception) {
-                        println("Dosya kopyalanırken bir hata oluştu: ${e.message}")
+                        return
                     }
                 } else {
-                    println("'$imagePath' geçerli bir dosya yolu değil veya dosya mevcut değil.")
+
                 }
             }
         }
     }
-
 
 
 }

@@ -171,7 +171,8 @@ fun FolderCard(
             .shadow(5.dp, RoundedCornerShape(10.dp))
             .clip(RoundedCornerShape(10.dp))
             .aspectRatio(1f)
-            .background(Color.White).clickable { completion(model.toString()) }
+            .background(Color.White).clickable {
+                completion(model.toString()) }
 
 
     ) {

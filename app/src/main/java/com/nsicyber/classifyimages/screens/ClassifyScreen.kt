@@ -60,8 +60,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.nsicyber.classifyimages.models.ClassifiedFolderModel
 import com.nsicyber.classifyimages.models.FolderModel
 import com.nsicyber.classifyimages.models.ImagesModel
+import com.nsicyber.classifyimages.toJson
 import com.nsicyber.classifyimages.viewmodels.ClassifyScreenViewModel
 import com.nsicyber.classifyimages.viewmodels.PreviewScreenViewModel
 import java.util.Locale
@@ -105,21 +107,27 @@ fun ClassifyScreen(
     Box() {
 
 
-
-            Column(Modifier.padding(start = 8.dp, top = 60.dp, end = 8.dp)) {
-                LazyVerticalGrid(
-                    columns = GridCells.Fixed(2),
-                    modifier = Modifier.wrapContentSize()
-                ) {
-                    items(viewModel.classifyTitles.value.keys.size) { index ->
-                        FolderCard(
-                            model = viewModel.classifyTitles.value.keys.toList().get(index)
-                        ){
-                            navController.navigate("preview_classified?model=${viewModel.classifyTitles.value.get(it)}")
-                        }
+        Column(Modifier.padding(start = 8.dp, top = 60.dp, end = 8.dp)) {
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(2),
+                modifier = Modifier.wrapContentSize()
+            ) {
+                items(viewModel.classifyTitles.value.keys.size) { index ->
+                    FolderCard(
+                        model = viewModel.classifyTitles.value.keys.toList().get(index)
+                    ) {
+                        navController.navigate(
+                            "preview_classified?model=${
+                                ClassifiedFolderModel(it ,viewModel.classifyTitles.value.get(
+                                    it
+                                )).toJson()
+                             
+                            }"
+                        )
                     }
                 }
             }
+        }
 
 
         // Category Field
@@ -216,7 +224,13 @@ fun ClassifyScreen(
                                     title = item,
                                     count = count
                                 ) { title ->
-navController.navigate("preview_classified?model=${viewModel.classifyTitles.value.get(title)}")
+                                    navController.navigate(
+                                        "preview_classified?model=${
+                                            ClassifiedFolderModel(title ,viewModel.classifyTitles.value.get(
+                                                title
+                                            )).toJson()
+                                        }"
+                                    )
                                     imageCategory = title
                                     category = title
                                     expanded = false

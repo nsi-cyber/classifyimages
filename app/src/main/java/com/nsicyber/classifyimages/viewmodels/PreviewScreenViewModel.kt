@@ -16,7 +16,7 @@ class PreviewScreenViewModel @Inject constructor() : ViewModel() {
 
 
     fun getImageListFromFolder(folderUri:String?,includeSubdirectories:Boolean?) {
-        val photoExtensions = listOf(".jpg", ".jpeg", ".png", ".gif") // Fotoğraf dosya uzantıları
+        val photoExtensions = listOf(".jpg", ".jpeg", ".png") // Fotoğraf dosya uzantıları
         val photoFilePaths = mutableListOf<String>() // Fotoğraf dosya yollarını içerecek liste
 
         val directory = File(folderUri+"/")
